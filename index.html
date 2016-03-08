@@ -34,16 +34,21 @@ Use the chmod command to make sure your private key file isn't publicly viewable
 <p>Use the ssh command to connect to the instance. You'll specify the private key <code>(.pem)</code> file and <code>user_name@public_dns_name</code>. For Ubuntu, the username is ubuntu. 
     ssh -i big-data.pem <a href="mailto:ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com">ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com</a></p>
 
-<p>You'll see a response like the following.
-    The authenticity of host 'ec2-198-51-100-1.compute-1.amazonaws.com (10.254.142.33)' can't be established.
-    RSA key fingerprint is 1f:51:ae:28:bf:89:e9:d8:1f:25:5d:37:2d:7d:b8:ca:9f:f5:f1:6f.
-    Are you sure you want to continue connecting (yes/no)?</p>
+<p>You'll see a response like the following.</p>
+
+<pre><code>The authenticity of host 'ec2-198-51-100-1.compute-1.amazonaws.com (10.254.142.33)' can't be established.
+RSA key fingerprint is 1f:51:ae:28:bf:89:e9:d8:1f:25:5d:37:2d:7d:b8:ca:9f:f5:f1:6f.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre>
 
 <p>(Optional) Verify that the fingerprint in the security alert matches the fingerprint that you obtained in step 1. If these fingerprints don't match, someone might be attempting a "man-in-the-middle" attack. If they match, continue to the next step.
-Enter yes.
-You'll see a response like the following.
-    Warning: Permanently added 'ec2-198-51-100-1.compute-1.amazonaws.com' (RSA) 
-to the list of known hosts.</p>
+Enter <code>yes</code>.
+You'll see a response like the following.</p>
+
+<pre><code>Warning: Permanently added 'ec2-198-51-100-1.compute-1.amazonaws.com' (RSA) 
+</code></pre>
+
+<p>to the list of known hosts.</p>
 
 <p>Reference: <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html</a></p>
 
