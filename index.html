@@ -13,9 +13,9 @@
     <section class="page-header">
       <h1 class="project-name">Single Node Hadoop installation on Ubuntu 14.04 Amazon EC2 Instance</h1>
       <h2 class="project-tagline">by Ashish Tamrakar (UNLV)</h2>
-      <a href="https://github.com/ashishtam/hadoop-single-node" class="btn">View on GitHub</a>
-      <a href="https://github.com/ashishtam/hadoop-single-node/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/ashishtam/hadoop-single-node/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/ashishtam/hadoop-installation" class="btn">View on GitHub</a>
+      <a href="https://github.com/ashishtam/hadoop-installation/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ashishtam/hadoop-installation/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
@@ -75,13 +75,15 @@
 
 <p>In a command line shell, change directories to the location of the private key file that you created when you launched the instance.</p>
 
-<p>Use the chmod command to make sure your private key file isn't publicly viewable. For example, if the name of your private key file is <code>big-data.pem</code>, use the following command:</p>
+<p>Use the <code>chmod</code> command to make sure your private key file isn't publicly viewable. For example, if the name of your private key file is <code>big-data.pem</code>, use the following command:</p>
 
 <pre><code>chmod 400 big-data.pem
 </code></pre>
 
-<p>Use the ssh command to connect to the instance. You'll specify the private key <code>(.pem)</code> file and <code>user_name@public_dns_name</code>. For Ubuntu, the username is ubuntu. 
-    ssh -i big-data.pem <a href="mailto:ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com">ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com</a></p>
+<p>Use the <code>ssh</code> command to connect to the instance. You'll specify the private key <code>(.pem)</code> file and <code>user_name@public_dns_name</code>. For Ubuntu, the username is ubuntu. </p>
+
+<pre><code>ssh -i big-data.pem ubuntu@ec2-198-51-100-1.compute-1.amazonaws.com
+</code></pre>
 
 <p>You'll see a response like the following.</p>
 
