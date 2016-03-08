@@ -151,25 +151,377 @@ The key's randomart image is:
 <pre><code>$ cat $HOME/.ssh/id_rsa.pub &gt;&gt; $HOME/.ssh/authorized_keys
 </code></pre>
 
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
+<h2>
+<a id="setting-up-hadoop-environment" class="anchor" href="#setting-up-hadoop-environment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setting Up Hadoop Environment</h2>
 
 <h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating pages manually</h3>
+<a id="configuring-bashrc-file" class="anchor" href="#configuring-bashrc-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuring .bashrc file</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>You need to add the following lines on <code>.bashrc</code> file under the folder <code>/home/ubuntu</code> as,</p>
+
+<pre><code>$ vim /home/ubuntu/.bashrc
+</code></pre>
+
+<p>Add the following lines:</p>
+
+<pre><code>#HADOOP VARIABLES START
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle
+export HADOOP_INSTALL=/home/ubuntu/hadoop
+export PATH=$PATH:$HADOOP_INSTALL/bin
+export PATH=$PATH:$HADOOP_INSTALL/sbin
+export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+export HADOOP_HDFS_HOME=$HADOOP_INSTALL
+export YARN_HOME=$HADOOP_INSTALL
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_INSTALL/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_INSTALL/lib/native"
+export HADOOP_CLASSPATH=${JAVA_HOME}/lib/tools.jar
+#HADOOP VARIABLES END
+</code></pre>
 
 <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="update-hadoop-envsh" class="anchor" href="#update-hadoop-envsh" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Update hadoop-env.sh</h3>
 
-<p>You can <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Update the <code>JAVA_HOME</code> in <code>/home/ubuntu/hadoop/etc/hadoop/hadoop_env.sh</code> as,</p>
+
+<pre><code>$ vim /home/ubuntu/hadoop/etc/hadoop/hadoop_env.sh
+</code></pre>
+
+<p>Find the <code>export JAVA_HOME</code> line and replace <code>{JAVA_HOME}</code> with the actual path as,</p>
+
+<pre><code>#Find this line and update with the path
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle
+</code></pre>
+
+<h2>
+<a id="configuring-hadoop-configuration-files" class="anchor" href="#configuring-hadoop-configuration-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuring hadoop configuration files</h2>
 
 <h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="addupdate-core-sitexml" class="anchor" href="#addupdate-core-sitexml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add/Update core-site.xml</h3>
 
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+<p>Add/Update the <code>core-site.xml</code> file by running the following command as,</p>
+
+<pre><code>$ vim /home/ubuntu/hadoop/etc/hadoop/core-site.xml
+</code></pre>
+
+<p>Add the following code under the <code>&lt;configuration&gt;&lt;/configuration&gt;</code> as,</p>
+
+<pre><code>&lt;configuration&gt;
+&lt;property&gt;
+  &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+  &lt;value&gt;/home/ubuntu/hadoop/tmp&lt;/value&gt;
+  &lt;description&gt;Temporary Directory.&lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.default.name&lt;/name&gt;
+  &lt;value&gt;hdfs://localhost:54310&lt;/value&gt;
+  &lt;description&gt;Use HDFS as file storage engine&lt;/description&gt;
+&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p>Also, you need to create the <code>tmp</code> folder on <code>/home/ubuntu/hadoop</code> as,</p>
+
+<pre><code>$ mkdir /home/ubuntu/hadoop/tmp
+</code></pre>
+
+<h3>
+<a id="addupdate-mapred-sitexml" class="anchor" href="#addupdate-mapred-sitexml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add/update mapred-site.xml</h3>
+
+<p>If you find the <code>mapred-site.xml</code> file inside <code>/home/ubuntu/hadoop/etc/hadoop/</code> then you just need to update inside the <code>mapred-site.xml</code> file as shown below. 
+Otherwise, you need to copy the <code>mapred-site.xml.template</code> to create <code>mapred-site.xml</code> file as,</p>
+
+<p>Commands to create the file (Skip this process if there is already <code>mapred-site.xml</code> file inside <code>/home/ubuntu/hadoop/etc/hadoop</code> folder),</p>
+
+<pre><code>$ cd /home/ubuntu/hadoop/etc/hadoop
+$ cp mapred-site.xml.template mapred-site.xml
+$ vim mapred-site.xml
+</code></pre>
+
+<p>Now, update <code>mapred-site.xml</code> file under the <code>&lt;configuration&gt;&lt;/configuration&gt;</code> as,</p>
+
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+    &lt;name&gt;mapred.job.tracker&lt;/name&gt;
+    &lt;value&gt;localhost:54311&lt;/value&gt;
+    &lt;description&gt;The host and port that the MapReduce job tracker runs
+    at.  If "local", then jobs are run in-process as a single map
+    and reduce task.
+    &lt;/description&gt;
+ &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<h3>
+<a id="addupdate-hdfs-sitexml" class="anchor" href="#addupdate-hdfs-sitexml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add/update hdfs-site.xml</h3>
+
+<p>Updating the <code>hdfs-site.xml</code> file as,</p>
+
+<pre><code>$ vim /home/ubuntu/hadoop/etc/hadoop/hdfs-site.xml
+</code></pre>
+
+<p>Edit the <code>hdfs-site.xml</code> file under the <code>&lt;configuration&gt;&lt;/configuration&gt;</code> as,</p>
+
+<pre><code>&lt;configuration&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.replication&lt;/name&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;description&gt;Default block replication.
+    The actual number of replications can be specified when the file is created.
+    The default is used if replication is not specified in create time.
+    &lt;/description&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+     &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+     &lt;value&gt;file:///home/ubuntu/hadoop/hdfs/namenode&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+     &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+     &lt;value&gt;file:///home/ubuntu/hadoop/hdfs/datanode&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+<p>Now you need to create two folders: <code>namenode</code> and <code>datanode</code> under the folders <code>/home/ubuntu/hadoop/hdfs</code> as,</p>
+
+<pre><code>$ mkdir -p /home/ubuntu/hadoop/hdfs/namenode
+$ mkdir -p /home/ubuntu/hadoop/hdfs/datanode
+</code></pre>
+
+<h2>
+<a id="format-the-new-hadoop-file-system" class="anchor" href="#format-the-new-hadoop-file-system" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Format the New Hadoop File System</h2>
+
+<p>Now, the Hadoop file system needs to be formatted so that we can start to use it. The format command should be issued with write permission since it creates current directory</p>
+
+<pre><code>$ hadoop namenode -format
+</code></pre>
+
+<h2>
+<a id="starting-hadoop" class="anchor" href="#starting-hadoop" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Starting Hadoop</h2>
+
+<p>To start the hadoop, we use <code>start-all.sh</code> or (<code>start-dfs.sh</code> and <code>start-yarn.sh</code> individually) as</p>
+
+<pre><code>$ start-all.sh
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>$ start-dfs.sh
+$ start-yarn.sh
+</code></pre>
+
+<p>The command will result in output as,</p>
+
+<pre><code>ubuntu@ip-172-31-50-38:~$ start-all.sh
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+Starting namenodes on [localhost]
+localhost: starting namenode, logging to /home/ubuntu/hadoop/logs/hadoop-ubuntu-namenode-ip-172-31-50-38.out
+localhost: starting datanode, logging to /home/ubuntu/hadoop/logs/hadoop-ubuntu-datanode-ip-172-31-50-38.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /home/ubuntu/hadoop/logs/hadoop-ubuntu-secondarynamenode-ip-172-31-50-38.out
+starting yarn daemons
+starting resourcemanager, logging to /home/ubuntu/hadoop/logs/yarn-ubuntu-resourcemanager-ip-172-31-50-38.out
+localhost: starting nodemanager, logging to /home/ubuntu/hadoop/logs/yarn-ubuntu-nodemanager-ip-172-31-50-38.out
+</code></pre>
+
+<p>We can check if it's really up and running:</p>
+
+<pre><code>$ jps
+5180 SecondaryNameNode
+3567 ResourceManager
+5412 NodeManager
+5442 Jps
+4836 NameNode
+4993 DataNode
+</code></pre>
+
+<h2>
+<a id="testing-mapreduce-job" class="anchor" href="#testing-mapreduce-job" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing MapReduce Job</h2>
+
+<p>For testing MapReduce job, you can test it with the jar files inside share/hadoop/mapreduce folder as,</p>
+
+<pre><code>~/hadoop$ hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.1.jar pi 2 5
+Number of Maps  = 2
+Samples per Map = 5
+14/07/14 01:28:02 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Wrote input for Map #0
+Wrote input for Map #1
+Starting Job
+14/07/14 01:28:07 INFO Configuration.deprecation: session.id is deprecated. Instead, use dfs.metrics.session-id
+14/07/14 01:28:07 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=JobTracker, sessionId=
+14/07/14 01:28:07 INFO input.FileInputFormat: Total input paths to process : 2
+14/07/14 01:28:07 INFO mapreduce.JobSubmitter: number of splits:2
+14/07/14 01:28:09 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_local1228885165_0001
+...
+    File Input Format Counters 
+        Bytes Read=236
+    File Output Format Counters 
+        Bytes Written=97
+Job Finished in 6.072 seconds
+Estimated value of Pi is 3.60000000000000000000
+</code></pre>
+
+<h2>
+<a id="mapreduce-example-with-wordcount" class="anchor" href="#mapreduce-example-with-wordcount" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MapReduce example with WordCount</h2>
+
+<p>We have a file <code>wordcount.txt</code> which has the following content as,</p>
+
+<pre><code>$ cat wordcount.txt
+Hello Hadoop, Goodbye Hadoop.
+</code></pre>
+
+<p>Let's look at Hadoop file system:</p>
+
+<pre><code>$ hadoop fs -ls
+</code></pre>
+
+<p>Now we want to copy the input file to hdfs:</p>
+
+<pre><code>$ hadoop fs -mkdir input
+$ hadoop fs -put wordcount.txt input/
+$ hadoop fs -ls input
+$ hadoop fs -cat input/wordcount.txt
+Hello Hadoop, Goodbye Hadoop.
+</code></pre>
+
+<h3>
+<a id="running-wordcount-mapreduce" class="anchor" href="#running-wordcount-mapreduce" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running wordcount MapReduce</h3>
+
+<pre><code>ubuntu@ip-172-31-50-38:~/hadoop/hadoopTest/WordCount$ hadoop jar wordcount.jar WordCount input/wordcount.txt output1
+16/03/08 05:40:56 INFO Configuration.deprecation: session.id is deprecated. Instead, use dfs.metrics.session-id
+16/03/08 05:40:56 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=JobTracker, sessionId=
+16/03/08 05:40:57 WARN mapreduce.JobSubmitter: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+16/03/08 05:40:57 INFO input.FileInputFormat: Total input paths to process : 1
+16/03/08 05:40:57 INFO mapreduce.JobSubmitter: number of splits:1
+16/03/08 05:40:57 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_local2071963236_0001
+16/03/08 05:40:57 INFO mapreduce.Job: The url to track the job: http://localhost:8080/
+16/03/08 05:40:57 INFO mapreduce.Job: Running job: job_local2071963236_0001
+16/03/08 05:40:57 INFO mapred.LocalJobRunner: OutputCommitter set in config null
+16/03/08 05:40:57 INFO mapred.LocalJobRunner: OutputCommitter is org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: Waiting for map tasks
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: Starting task: attempt_local2071963236_0001_m_000000_0
+16/03/08 05:40:58 INFO mapred.Task:  Using ResourceCalculatorProcessTree : [ ]
+16/03/08 05:40:58 INFO mapred.MapTask: Processing split: hdfs://localhost:54310/user/ubuntu/input/wordcount.txt:0+27
+16/03/08 05:40:58 INFO mapred.MapTask: (EQUATOR) 0 kvi 26214396(104857584)
+16/03/08 05:40:58 INFO mapred.MapTask: mapreduce.task.io.sort.mb: 100
+16/03/08 05:40:58 INFO mapred.MapTask: soft limit at 83886080
+16/03/08 05:40:58 INFO mapred.MapTask: bufstart = 0; bufvoid = 104857600
+16/03/08 05:40:58 INFO mapred.MapTask: kvstart = 26214396; length = 6553600
+16/03/08 05:40:58 INFO mapred.MapTask: Map output collector class = org.apache.hadoop.mapred.MapTask$MapOutputBuffer
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: 
+16/03/08 05:40:58 INFO mapred.MapTask: Starting flush of map output
+16/03/08 05:40:58 INFO mapred.MapTask: Spilling map output
+16/03/08 05:40:58 INFO mapred.MapTask: bufstart = 0; bufend = 43; bufvoid = 104857600
+16/03/08 05:40:58 INFO mapred.MapTask: kvstart = 26214396(104857584); kvend = 26214384(104857536); length = 13/6553600
+16/03/08 05:40:58 INFO mapred.MapTask: Finished spill 0
+16/03/08 05:40:58 INFO mapred.Task: Task:attempt_local2071963236_0001_m_000000_0 is done. And is in the process of committing
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: map
+16/03/08 05:40:58 INFO mapred.Task: Task 'attempt_local2071963236_0001_m_000000_0' done.
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: Finishing task: attempt_local2071963236_0001_m_000000_0
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: map task executor complete.
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: Waiting for reduce tasks
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: Starting task: attempt_local2071963236_0001_r_000000_0
+16/03/08 05:40:58 INFO mapred.Task:  Using ResourceCalculatorProcessTree : [ ]
+16/03/08 05:40:58 INFO mapred.ReduceTask: Using ShuffleConsumerPlugin: org.apache.hadoop.mapreduce.task.reduce.Shuffle@12a20e8b
+16/03/08 05:40:58 INFO reduce.MergeManagerImpl: MergerManager: memoryLimit=363285696, maxSingleShuffleLimit=90821424, mergeThreshold=239768576, ioSortFactor=10, memToMemMergeOutputsThreshold=10
+16/03/08 05:40:58 INFO reduce.EventFetcher: attempt_local2071963236_0001_r_000000_0 Thread started: EventFetcher for fetching Map Completion Events
+16/03/08 05:40:58 INFO reduce.LocalFetcher: localfetcher#1 about to shuffle output of map attempt_local2071963236_0001_m_000000_0 decomp: 53 len: 57 to MEMORY
+16/03/08 05:40:58 INFO reduce.InMemoryMapOutput: Read 53 bytes from map-output for attempt_local2071963236_0001_m_000000_0
+16/03/08 05:40:58 INFO reduce.MergeManagerImpl: closeInMemoryFile -&gt; map-output of size: 53, inMemoryMapOutputs.size() -&gt; 1, commitMemory -&gt; 0, usedMemory -&gt;53
+16/03/08 05:40:58 WARN io.ReadaheadPool: Failed readahead on ifile
+EBADF: Bad file descriptor
+    at org.apache.hadoop.io.nativeio.NativeIO$POSIX.posix_fadvise(Native Method)
+    at org.apache.hadoop.io.nativeio.NativeIO$POSIX.posixFadviseIfPossible(NativeIO.java:267)
+    at org.apache.hadoop.io.nativeio.NativeIO$POSIX$CacheManipulator.posixFadviseIfPossible(NativeIO.java:146)
+    at org.apache.hadoop.io.ReadaheadPool$ReadaheadRequestImpl.run(ReadaheadPool.java:206)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+    at java.lang.Thread.run(Thread.java:745)
+16/03/08 05:40:58 INFO reduce.EventFetcher: EventFetcher is interrupted.. Returning
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: 1 / 1 copied.
+16/03/08 05:40:58 INFO reduce.MergeManagerImpl: finalMerge called with 1 in-memory map-outputs and 0 on-disk map-outputs
+16/03/08 05:40:58 INFO mapred.Merger: Merging 1 sorted segments
+16/03/08 05:40:58 INFO mapred.Merger: Down to the last merge-pass, with 1 segments left of total size: 43 bytes
+16/03/08 05:40:58 INFO reduce.MergeManagerImpl: Merged 1 segments, 53 bytes to disk to satisfy reduce memory limit
+16/03/08 05:40:58 INFO reduce.MergeManagerImpl: Merging 1 files, 57 bytes from disk
+16/03/08 05:40:58 INFO reduce.MergeManagerImpl: Merging 0 segments, 0 bytes from memory into reduce
+16/03/08 05:40:58 INFO mapred.Merger: Merging 1 sorted segments
+16/03/08 05:40:58 INFO mapred.Merger: Down to the last merge-pass, with 1 segments left of total size: 43 bytes
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: 1 / 1 copied.
+16/03/08 05:40:58 INFO Configuration.deprecation: mapred.skip.on is deprecated. Instead, use mapreduce.job.skiprecords
+16/03/08 05:40:58 INFO mapred.Task: Task:attempt_local2071963236_0001_r_000000_0 is done. And is in the process of committing
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: 1 / 1 copied.
+16/03/08 05:40:58 INFO mapred.Task: Task attempt_local2071963236_0001_r_000000_0 is allowed to commit now
+16/03/08 05:40:58 INFO output.FileOutputCommitter: Saved output of task 'attempt_local2071963236_0001_r_000000_0' to hdfs://localhost:54310/user/ubuntu/output1/_temporary/0/task_local2071963236_0001_r_000000
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: reduce &gt; reduce
+16/03/08 05:40:58 INFO mapred.Task: Task 'attempt_local2071963236_0001_r_000000_0' done.
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: Finishing task: attempt_local2071963236_0001_r_000000_0
+16/03/08 05:40:58 INFO mapred.LocalJobRunner: reduce task executor complete.
+16/03/08 05:40:58 INFO mapreduce.Job: Job job_local2071963236_0001 running in uber mode : false
+16/03/08 05:40:58 INFO mapreduce.Job:  map 100% reduce 100%
+16/03/08 05:40:58 INFO mapreduce.Job: Job job_local2071963236_0001 completed successfully
+16/03/08 05:40:58 INFO mapreduce.Job: Counters: 38
+    File System Counters
+        FILE: Number of bytes read=6672
+        FILE: Number of bytes written=518943
+        FILE: Number of read operations=0
+        FILE: Number of large read operations=0
+        FILE: Number of write operations=0
+        HDFS: Number of bytes read=54
+        HDFS: Number of bytes written=35
+        HDFS: Number of read operations=13
+        HDFS: Number of large read operations=0
+        HDFS: Number of write operations=4
+    Map-Reduce Framework
+        Map input records=1
+        Map output records=4
+        Map output bytes=43
+        Map output materialized bytes=57
+        Input split bytes=119
+        Combine input records=4
+        Combine output records=4
+        Reduce input groups=4
+        Reduce shuffle bytes=57
+        Reduce input records=4
+        Reduce output records=4
+        Spilled Records=8
+        Shuffled Maps =1
+        Failed Shuffles=0
+        Merged Map outputs=1
+        GC time elapsed (ms)=72
+        CPU time spent (ms)=0
+        Physical memory (bytes) snapshot=0
+        Virtual memory (bytes) snapshot=0
+        Total committed heap usage (bytes)=241442816
+    Shuffle Errors
+        BAD_ID=0
+        CONNECTION=0
+        IO_ERROR=0
+        WRONG_LENGTH=0
+        WRONG_MAP=0
+        WRONG_REDUCE=0
+    File Input Format Counters 
+        Bytes Read=27
+    File Output Format Counters 
+        Bytes Written=35
+</code></pre>
+
+<h3>
+<a id="output-of-mapreduce-wordcount" class="anchor" href="#output-of-mapreduce-wordcount" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Output of MapReduce WordCount</h3>
+
+<p>Here is our output from the MR run:</p>
+
+<pre><code>ubuntu@ip-172-31-50-38:~/hadoop/hadoopTest/WordCount$ hadoop fs -ls output1
+Found 2 items
+-rw-r--r--   1 ubuntu supergroup          0 2016-03-08 05:40 output1/_SUCCESS
+-rw-r--r--   1 ubuntu supergroup         35 2016-03-08 05:40 output1/part-r-00000
+ubuntu@ip-172-31-50-38:~/hadoop/hadoopTest/WordCount$ hadoop fs -cat output1/part-r-00000
+Goodbye 1
+Hadoo   1
+Hadoop  1
+Hello   1
+</code></pre>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ashishtam/hadoop-installation">Single Node Hadoop installation on Ubuntu 14.04 Amazon EC2 Instance</a> is maintained by <a href="https://github.com/ashishtam">ashishtam</a>.</span>
