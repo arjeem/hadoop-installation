@@ -20,10 +20,10 @@
 
     <section class="main-content">
       <h1>
-<a id="-create-the-amazon-ec2-instance-ubuntu-1404" class="anchor" href="#-create-the-amazon-ec2-instance-ubuntu-1404" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>### Create the Amazon EC2 Instance (Ubuntu 14.04)</h1>
+<a id="create-the-amazon-ec2-instance-ubuntu-1404" class="anchor" href="#create-the-amazon-ec2-instance-ubuntu-1404" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create the Amazon EC2 Instance (Ubuntu 14.04)</h1>
 
-<h3>
-<a id="to-connect-your-ec2-instance-using-ssh-from-your-local" class="anchor" href="#to-connect-your-ec2-instance-using-ssh-from-your-local" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To connect your EC2 instance using SSH from your local</h3>
+<h2>
+<a id="to-connect-your-amazon-ec2-instance-using-ssh-from-your-local-machine-ubuntu" class="anchor" href="#to-connect-your-amazon-ec2-instance-using-ssh-from-your-local-machine-ubuntu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To connect your Amazon EC2 instance using SSH from your local machine (Ubuntu)</h2>
 
 <p>In a command line shell, change directories to the location of the private key file that you created when you launched the instance. <br>
 Use the chmod command to make sure your private key file isn't publicly viewable. For example, if the name of your private key file is <code>big-data.pem</code>, use the following command:<br></p>
@@ -51,6 +51,105 @@ You'll see a response like the following.</p>
 <p>to the list of known hosts.</p>
 
 <p>Reference: <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html</a></p>
+
+<h2>
+<a id="installation-of-single-node-hadoop-cluster-on-ubuntu-1404-amazon-ec2-instance" class="anchor" href="#installation-of-single-node-hadoop-cluster-on-ubuntu-1404-amazon-ec2-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation of Single Node Hadoop cluster on Ubuntu 14.04 Amazon EC2 Instance</h2>
+
+<h3>
+<a id="install-java" class="anchor" href="#install-java" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Java</h3>
+
+<p>You need to install java by following commands as,</p>
+
+<pre><code>$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java7-installer
+# Update Java runtime
+$ sudo update-java-alternatives -s java-7-oracle
+</code></pre>
+
+<p>To check whether your java is installed or not,</p>
+
+<pre><code>$ java -version
+</code></pre>
+
+<h3>
+<a id="disabling-ipv6" class="anchor" href="#disabling-ipv6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Disabling IPv6</h3>
+
+<p>To disable <code>ipv6</code>, you have to open <code>/etc/sysctl.conf</code> using any text editor and insert the following lines at the end:</p>
+
+<pre><code>net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+</code></pre>
+
+<p>If <code>ipv6</code> is still not disabled, then the problem is that <code>sysctl.conf</code> is still not activated.</p>
+
+<p>To solve this, open a terminal(Ctrl+Alt+T) and type the command,</p>
+
+<pre><code>$ sudo sysctl -p
+</code></pre>
+
+<p>You will see this in the terminal:</p>
+
+<pre><code>net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+</code></pre>
+
+<p>After that, if you run:</p>
+
+<pre><code>$ cat /proc/sys/net/ipv6/conf/all/disable_ipv6
+</code></pre>
+
+<p>It will report:</p>
+
+<pre><code>1
+</code></pre>
+
+<h3>
+<a id="install-hadoop-260-stable-binaries" class="anchor" href="#install-hadoop-260-stable-binaries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Hadoop 2.6.0 stable binaries</h3>
+
+<p>Install the hadoop binary and then install it on the home folder itself.</p>
+
+<pre><code>$ cd
+$ wget http://mirrors.sonic.net/apache/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz
+$ tar xvf hadoop-2.6.0.tar.gz
+$ mv hadoop-2.6.0 hadoop
+</code></pre>
+
+<h3>
+<a id="create-and-setup-ssh-certificates" class="anchor" href="#create-and-setup-ssh-certificates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create and Setup SSH Certificates</h3>
+
+<p>To create the ssh key, we create the following command as,</p>
+
+<pre><code>$ ssh-keygen -t rsa -P ""
+
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ubuntu/.ssh/id_rsa): 
+Created directory '/home/ubuntu/.ssh'.
+Your identification has been saved in /home/ubuntu/.ssh/id_rsa.
+Your public key has been saved in /home/ubuntu/.ssh/id_rsa.pub.
+The key fingerprint is:
+50:6b:f3:fc:0f:32:bf:30:79:c2:41:71:26:cc:7d:e3 ubuntu@laptop
+The key's randomart image is:
++--[ RSA 2048]----+
+|        .oo.o    |
+|       . .o=. o  |
+|      . + .  o . |
+|       o =    E  |
+|        S +      |
+|         . +     |
+|          O +    |
+|           O o   |
+|            o..  |
++-----------------+
+</code></pre>
+
+<p>You need to copy the key to the <code>authorized_keys</code>,</p>
+
+<pre><code>$ cat $HOME/.ssh/id_rsa.pub &gt;&gt; $HOME/.ssh/authorized_keys
+</code></pre>
 
 <h3>
 <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Designer Templates</h3>
