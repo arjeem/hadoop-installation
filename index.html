@@ -22,11 +22,45 @@
       <h1>
 <a id="create-the-amazon-ec2-instance-ubuntu-1404" class="anchor" href="#create-the-amazon-ec2-instance-ubuntu-1404" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create the Amazon EC2 Instance (Ubuntu 14.04)</h1>
 
+<p>Steps to set up the Amazon AWS as,</p>
+
+<h3>
+<a id="sign-in-to-the-aws-console-amazon-web-services" class="anchor" href="#sign-in-to-the-aws-console-amazon-web-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sign in to the AWS Console (Amazon Web Services)</h3>
+
+<p><img src="images/1-Amazon-Web-Services.PNG" alt="Amazon Web Services"></p>
+
+<h3>
+<a id="launch-the-amazon-ec2-instance" class="anchor" href="#launch-the-amazon-ec2-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Launch the Amazon EC2 Instance</h3>
+
+<h3>
+<a id="selecting-the-amazon-machine-image" class="anchor" href="#selecting-the-amazon-machine-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Selecting the Amazon Machine Image</h3>
+
+<h3>
+<a id="choose-an-instance-type" class="anchor" href="#choose-an-instance-type" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Choose an Instance Type</h3>
+
+<h3>
+<a id="configure-instance-details" class="anchor" href="#configure-instance-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure Instance Details</h3>
+
+<h3>
+<a id="configure-security-group" class="anchor" href="#configure-security-group" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure Security Group</h3>
+
+<h3>
+<a id="review-and-launch" class="anchor" href="#review-and-launch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Review and Launch</h3>
+
+<h3>
+<a id="create-key-pair" class="anchor" href="#create-key-pair" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create key pair</h3>
+
+<h3>
+<a id="running-instances" class="anchor" href="#running-instances" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running instances</h3>
+
+<p>Now the instance is running and you click on the Instances on the left tab to see your EC2 instances running.</p>
+
 <h2>
 <a id="to-connect-your-amazon-ec2-instance-using-ssh-from-your-local-machine-ubuntu" class="anchor" href="#to-connect-your-amazon-ec2-instance-using-ssh-from-your-local-machine-ubuntu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To connect your Amazon EC2 instance using SSH from your local machine (Ubuntu)</h2>
 
-<p>In a command line shell, change directories to the location of the private key file that you created when you launched the instance. <br>
-Use the chmod command to make sure your private key file isn't publicly viewable. For example, if the name of your private key file is <code>big-data.pem</code>, use the following command:<br></p>
+<p>In a command line shell, change directories to the location of the private key file that you created when you launched the instance.</p>
+
+<p>Use the chmod command to make sure your private key file isn't publicly viewable. For example, if the name of your private key file is <code>big-data.pem</code>, use the following command:</p>
 
 <pre><code>chmod 400 big-data.pem
 </code></pre>
@@ -522,6 +556,11 @@ Hadoo   1
 Hadoop  1
 Hello   1
 </code></pre>
+
+<h3>
+<a id="github-repository-for-hadoop-folder-with-configuration" class="anchor" href="#github-repository-for-hadoop-folder-with-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GitHub repository for Hadoop folder with configuration</h3>
+
+<p>Hadoop package with configuration is available in <a href="https://github.com/ashishtam/hadoop-single-node">https://github.com/ashishtam/hadoop-single-node</a></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/ashishtam/hadoop-installation">Single Node Hadoop installation on Ubuntu 14.04 Amazon EC2 Instance</a> is maintained by <a href="https://github.com/ashishtam">ashishtam</a>.</span>
