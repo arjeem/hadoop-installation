@@ -25,35 +25,50 @@
 <p>Steps to set up the Amazon AWS as,</p>
 
 <h3>
-<a id="sign-in-to-the-aws-console-amazon-web-services" class="anchor" href="#sign-in-to-the-aws-console-amazon-web-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sign in to the AWS Console (Amazon Web Services)</h3>
+<a id="1-sign-in-to-the-aws-console-amazon-web-services" class="anchor" href="#1-sign-in-to-the-aws-console-amazon-web-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. Sign in to the AWS Console (Amazon Web Services)</h3>
 
 <p><img src="images/1-Amazon-Web-Services.PNG" alt="Amazon Web Services"></p>
 
 <h3>
-<a id="launch-the-amazon-ec2-instance" class="anchor" href="#launch-the-amazon-ec2-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Launch the Amazon EC2 Instance</h3>
+<a id="2-launch-the-amazon-ec2-instance" class="anchor" href="#2-launch-the-amazon-ec2-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Launch the Amazon EC2 Instance</h3>
+
+<p><img src="images/2-launch-instance.PNG" alt="Launch Instance"></p>
 
 <h3>
-<a id="selecting-the-amazon-machine-image" class="anchor" href="#selecting-the-amazon-machine-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Selecting the Amazon Machine Image</h3>
+<a id="3-selecting-the-amazon-machine-image" class="anchor" href="#3-selecting-the-amazon-machine-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Selecting the Amazon Machine Image</h3>
+
+<p><img src="images/3-Amazon-Machine-Image.PNG" alt="Amazon Machine Image"></p>
 
 <h3>
-<a id="choose-an-instance-type" class="anchor" href="#choose-an-instance-type" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Choose an Instance Type</h3>
+<a id="4-choose-an-instance-type" class="anchor" href="#4-choose-an-instance-type" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Choose an Instance Type</h3>
+
+<p><img src="images/4-Instance-Type.PNG" alt="Instance Type"></p>
 
 <h3>
-<a id="configure-instance-details" class="anchor" href="#configure-instance-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure Instance Details</h3>
+<a id="5-configure-instance-details" class="anchor" href="#5-configure-instance-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5. Configure Instance Details</h3>
+
+<p><img src="5-Configuring-Instance-details.PNG" alt="Configuring Instance Details"></p>
 
 <h3>
-<a id="configure-security-group" class="anchor" href="#configure-security-group" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure Security Group</h3>
+<a id="6-configure-security-group" class="anchor" href="#6-configure-security-group" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6. Configure Security Group</h3>
+
+<p><img src="images/6-Configure-Security-Group.PNG" alt="Configuring Security Group"></p>
 
 <h3>
-<a id="review-and-launch" class="anchor" href="#review-and-launch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Review and Launch</h3>
+<a id="7-review-and-launch-instance" class="anchor" href="#7-review-and-launch-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. Review and Launch Instance</h3>
+
+<p><img src="images/7-Review-and-launch.PNG" alt="Review and Launch Instance"></p>
 
 <h3>
-<a id="create-key-pair" class="anchor" href="#create-key-pair" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create key pair</h3>
+<a id="8-create-key-pair" class="anchor" href="#8-create-key-pair" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>8. Create key pair</h3>
+
+<p><img src="images/8-Create-key-pair.PNG" alt="Create Key Pair"></p>
 
 <h3>
-<a id="running-instances" class="anchor" href="#running-instances" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running instances</h3>
+<a id="9-running-instances" class="anchor" href="#9-running-instances" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>9. Running instances</h3>
 
-<p>Now the instance is running and you click on the Instances on the left tab to see your EC2 instances running.</p>
+<p>Now the instance is running and you click on the Instances on the left tab to see your EC2 instances running.
+<img src="images/9-Instances.png" alt="Running Instances"></p>
 
 <h2>
 <a id="to-connect-your-amazon-ec2-instance-using-ssh-from-your-local-machine-ubuntu" class="anchor" href="#to-connect-your-amazon-ec2-instance-using-ssh-from-your-local-machine-ubuntu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To connect your Amazon EC2 instance using SSH from your local machine (Ubuntu)</h2>
@@ -84,7 +99,9 @@ You'll see a response like the following.</p>
 
 <p>to the list of known hosts.</p>
 
-<p>Reference: <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html</a></p>
+<p>It looks something like this,
+<img src="10-ssh-to-ec2-instance-from-local-machine.png" alt="SSH to EC2 Instance from local machine">
+Reference: <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html</a></p>
 
 <h2>
 <a id="installation-of-single-node-hadoop-cluster-on-ubuntu-1404-amazon-ec2-instance" class="anchor" href="#installation-of-single-node-hadoop-cluster-on-ubuntu-1404-amazon-ec2-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation of Single Node Hadoop cluster on Ubuntu 14.04 Amazon EC2 Instance</h2>
