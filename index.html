@@ -343,6 +343,46 @@ $ vim mapred-site.xml
 $ mkdir -p /home/ubuntu/hadoop/hdfs/datanode
 </code></pre>
 
+<h3>
+<a id="addupdate-yarn-sitexml" class="anchor" href="#addupdate-yarn-sitexml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add/update yarn-site.xml</h3>
+
+<p>Updating the <code>yarn-site.xml</code> file as,</p>
+
+<pre><code>$ vim /home/ubuntu/hadoop/etc/hadoop/yarn-site.xml
+</code></pre>
+
+<p>Edit the <code>yarn-site.xml</code> file under the <code>&lt;configuration&gt;&lt;/configuration&gt;</code> as,</p>
+
+<pre><code>&lt;configuration&gt;
+
+&lt;!-- Site specific YARN configuration properties --&gt;
+&lt;property&gt;
+ &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+ &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+ &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
+ &lt;value&gt;localhost:8030&lt;/value&gt;
+&lt;/property&gt; 
+&lt;property&gt;
+ &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+ &lt;value&gt;localhost:8032&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+  &lt;value&gt;localhost:8088&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
+  &lt;value&gt;localhost:8031&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
+  &lt;value&gt;localhost:8033&lt;/value&gt;
+&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+
 <h2>
 <a id="format-the-new-hadoop-file-system" class="anchor" href="#format-the-new-hadoop-file-system" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Format the New Hadoop File System</h2>
 
