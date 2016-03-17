@@ -440,7 +440,7 @@ localhost: starting nodemanager, logging to /home/ubuntu/hadoop/logs/yarn-ubuntu
 
 <p>For testing MapReduce job, you can test it with the jar files inside share/hadoop/mapreduce folder as,</p>
 
-<pre><code>~/hadoop$ hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.1.jar pi 2 5
+<pre><code>~/hadoop$ hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar pi 2 5
 Number of Maps  = 2
 Samples per Map = 5
 14/07/14 01:28:02 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
@@ -467,7 +467,7 @@ Estimated value of Pi is 3.60000000000000000000
 <p>We have a file <code>wordcount.txt</code> which has the following content as,</p>
 
 <pre><code>$ cat wordcount.txt
-Hello Hadoop, Goodbye Hadoop.
+Hello Hadoop Goodbye Hadoop
 </code></pre>
 
 <p>Let's look at Hadoop file system:</p>
@@ -690,8 +690,7 @@ Found 2 items
 -rw-r--r--   1 ubuntu supergroup         35 2016-03-08 05:40 output1/part-r-00000
 ubuntu@ip-172-31-50-38:~/hadoop/hadoopTest/WordCount$ hadoop fs -cat output1/part-r-00000
 Goodbye 1
-Hadoo   1
-Hadoop  1
+Hadoop  2
 Hello   1
 </code></pre>
 
